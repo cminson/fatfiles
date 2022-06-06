@@ -1,12 +1,21 @@
 # fatfiles
 
-fatfiles is a linux utility that prints all files in a given directory, sorted by size
+fatfiles is a unix utility that prints all files greater than 1M, in a given directory, sorted by size
+
 
 ## Usage
 
-fatfiles <path>
+fatfiles path
 
 If path is not given, then current working directory is assumed
+
+
+## Author
+
+Christopher Minson
+www.christopherminson.com
+
+Created as a learning experience (my first Go program!), but is also a generally useful tool.
 
 
 ## Contributing
