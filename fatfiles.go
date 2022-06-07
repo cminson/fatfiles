@@ -47,9 +47,6 @@ func main() {
     fmt.Printf("Scanning: %s\n", path)
 
     filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
-        if err != nil {
-            return err
-        }
 
         totalFileCount ++
         fileSize := info.Size()
