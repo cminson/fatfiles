@@ -2,7 +2,7 @@
  * fatfile
  * print all files under given path, sorted by rounded size in MB
  *
- * author: Chrisotpher Minson
+ * author: Christopher Minson
  *
  */
 
