@@ -1,6 +1,6 @@
 /*
  * fatfile
- * print all files larger than 1M, sorted by size
+ * print all files under given path, sorted by size
  *
  * author: Chrisotpher Minson
  *
@@ -20,12 +20,15 @@ type FileElement struct {
     size  int64
 }
 
+const ONE_K = 1000
 const ONE_MB = 1000000
 
 func main() {
 
     var listFileElements = []FileElement{}
     var path string
+    var totalFileCount int
+    var totalSize int64
 
     switch len(os.Args) {
     case 1:
@@ -43,32 +46,28 @@ func main() {
     }
     fmt.Printf("Scanning: %s\n", path)
 
-    err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+    filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
         if err != nil {
-            fmt.Println(err)
             return err
         }
 
+        totalFileCount ++
         fileSize := info.Size()
-        if fileSize > ONE_MB {
+        totalSize += fileSize
 
-            fileElement := FileElement{path: path, size: fileSize}
-            listFileElements = append(listFileElements, fileElement)
-        }
+        fileElement := FileElement{path: path, size: fileSize}
+        listFileElements = append(listFileElements, fileElement)
 
         return nil
     })
-    if err != nil {
-        fmt.Println(err)
-        os.Exit(0)
-    }
 
     sort.Slice(listFileElements, func(i, j int) bool {
         return listFileElements[i].size < listFileElements[j].size
     })
 
     for  _, e := range listFileElements {
-        fmt.Printf("%dM %s\n",  e.size / ONE_MB, e.path)
+        fmt.Printf("%0.2fM %s\n",  float64(e.size) / float64(ONE_MB), e.path)
     }
-}
+    fmt.Printf("total files: %d total size: %0.2fM\n",  totalFileCount, float64(totalSize) / float64(ONE_MB))
 
+}
