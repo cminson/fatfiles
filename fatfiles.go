@@ -20,7 +20,6 @@ type FileElement struct {
     size  int64
 }
 
-const ONE_K = 1000
 const ONE_MB = 1000000
 
 func main() {
